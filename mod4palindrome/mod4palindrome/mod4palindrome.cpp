@@ -17,35 +17,41 @@ int main()
 	queue<char> q; //queue to hold the phrase
 	cout << "Enter a phrase, and I will check if it is a palindrome:\n";
 	getline(cin, phrase); //get the phrase
-	for (int i = 0; i < phrase.length(); i++) //loop through the phrase
+// Insert each character that is not a space into both a queue and a stack. This removes the spaces from the phrase. 
+// Dequeueing the queue and storing the characters in a string creates a forward phrase with no spaces. 
+//Popping the stack and storing the characters in a string creates a reversed phrase with no spaces
+	for (int i = 0; i < phrase.length(); i++)
 	{
-		if (phrase[i] != ' ')  // if the character is not a space
+		if (phrase[i] != ' ')
 		{
-			s.push(phrase[i]); //push the phrase onto the stack
-			q.push(phrase[i]); //push the phrase onto the queue
+			s.push(phrase[i]);
+			q.push(phrase[i]);
 		}
 	}
-	bool palindrome = true; //boolean to hold if the phrase is a palindrome
-	while (!s.empty() && palindrome)
+	string forward = "";
+	string reverse = "";
+	while (!q.empty())
 	{
-		if (s.top() != q.front()) //if top of stack does not equal front of queue
-		{
-			palindrome = false;
-		}
-		s.pop(); //pop the stack
-		q.pop(); //pop the queue
+		forward += q.front();
+		q.pop();
+	}
+	while (!s.empty())
+	{
+		reverse += s.top();
+		s.pop();
 	}
 	cout << endl;
-	
-	cout << "forward phrase from queue: " << phrase << endl;
-	cout << "poppped phrase from stack: " << phrase << endl;
-	if (palindrome)
+	cout << "forward phrase from queue: " << forward << endl;
+	cout << "popped phrase from stack: " << reverse << endl;
+	cout << endl;
+	// Compare the forward and reverse phrases. If they are the same, the phrase is a palindrome.
+	if (forward == reverse)
 	{
-		cout << "The phrase is a palindrome." << endl;
+		cout << "The phrase is a palindrome.\n";
 	}
 	else
 	{
-		cout << "The phrase is not a palindrome." << endl;
+		cout << "The phrase is not a palindrome.\n";
 	}
 	system("pause");
 	return 0;
